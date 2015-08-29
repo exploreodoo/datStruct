@@ -30,7 +30,7 @@ class contract_loan(models.Model):
     _inherit = ['mail.thread', 'ir.needaction_mixin']    
 
     name = fields.Char(string='Contract Name',  required=True)
-    plan_id = fields.Many2one('contract.plan', string='Plan ')
+    plan_id = fields.Many2one('contract.plan', string='Plan')
 contract_loan()
 
 class contract_plan(models.Model):
@@ -39,8 +39,24 @@ class contract_plan(models.Model):
     _description = 'Contract plan'       
 
     name = fields.Char(string='Plan Name',  required=True)
+    amount = fields.Char(string='Monthly Bill',  required=True)
+    service_charge = fields.Char(string='Service Charge',  required=True)
+    duration = fields.Selection([('6', '6 Months'),('12', '12 Months'), ('24', '24 Months')], string='Period',  required=True)
+    free_items = fields.One2many('plan.package', 'paln_id', 'Free Items', help='Package includes free items')
+    paid_items = fields.One2many('plan.package', 'paln_id', 'Free Items', help='Package includes free items')
 contract_plan()
 
+class plan_package(models.Model):
+    """Event"""
+    _name = 'plan.package'
+    _description = 'Plan Packages'       
+
+    name = fields.Char(string='Description',  required=True)
+    plan_id = fields.Many2one('contract.plan', string='Plan', ondelete='cascade')
+    product_id = fields.Many2one('product.product', 'Product', domain=[('sale_ok', '=', True)], required=True, change_default=True, ondelete='restrict')
+    quantity = fields.Float('Quantity')
+    
+plan_package()
     
 
 
