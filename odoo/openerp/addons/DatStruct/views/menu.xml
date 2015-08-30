@@ -14,5 +14,8 @@
 <!--                <field name="groups">base.group_no_one</field>-->
 <!--            </record>-->
 
+        <menuitem id="menu_contract" name="Contract" sequence="5" parent="base.menu_sales" />
+        <menuitem action='act_contract_loan' id='menu_contract_loan' parent='menu_contract'/>
+
    </data>
 </openerp>
