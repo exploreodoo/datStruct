@@ -1,6 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>              
+    <data>          
+    
+    
+         <record model="ir.ui.view" id="view_contract_loan_form">
+            <field name="name">Contract</field>
+            <field name="model">contract.loan</field>
+            <field name="arch" type="xml">   
+                <form string="Contract">  
+                   <header>
+                       
+                   </header>                  
+                                 
+                      <sheet>
+                      
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1><field name="name"/></h1>
+                        </div>
+                       <group>
+                            <group>
+                                <field name= 'plan_id'/>
+                                <field name= 'partner_id'/>
+                                <field name= 'company_name'/>
+                                <field name= 'address'/>
+                                <field name= 'address1'/>
+                                <field name='city'/>
+                                <field name='state_id'/>
+                                <field name='country_id'/>
+                               
+                            </group>
+                            <group> 
+                                <field name= 'gender'/>      
+                                <field name= 'dob'/>                      
+                                <field name= 'mobile'/>
+                                <field name= 'email'/>
+                                <field name= 'occupation'/> 
+                                                                                                              
+                            </group>
+                       
+                       </group>
+                       
+                       <group string='Passport Details'>
+                       
+                            <field name= 'passport_no'/>
+                            <field name= 'passport_issue_date'/>
+                            <field name= 'country_issue'/>
+                            <field name= 'expiry_date'/>   
+                       
+                       </group>
+                  
+                      </sheet>
+                
+                </form>
+            </field>
+         </record>    
+         
+         <record model="ir.ui.view" id="view_contract_loan_tree">
+            <field name="name">Contract</field>
+            <field name="model">contract.loan</field>
+            <field name="arch" type="xml">
+                <tree string="Contracts">
+                    <field name="name"/>
+                    <field name= 'plan_id'/>
+                    <field name= 'partner_id'/>
+                    <field name= 'company_name'/>
+                    <field name= 'occupation'/> 
+                    <field name= 'passport_no'/>
+                     
+                     
+                </tree>
+            </field>
+        </record>
+         
+         <record id="act_contract_loan" model="ir.actions.act_window">
+            <field name="res_model">contract.loan</field>
+            <field name="view_type">form</field>
+            <field name="name">Contracts</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+         
     
     </data>
 </openerp>    
