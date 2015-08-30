@@ -48,6 +48,7 @@ class contract_loan(models.Model):
     passport_issue_date  = fields.Date(string='Passport Issue Date ')
     country_issue        = fields.Many2one('res.partner',string='Passport Issue Date ')
     expiry_date         = fields.Date(string='Passport Expairy Date ')
+
 contract_loan()
 
 class contract_plan(models.Model):
@@ -56,8 +57,24 @@ class contract_plan(models.Model):
     _description = 'Contract plan'       
 
     name = fields.Char(string='Plan Name',  required=True)
+    amount = fields.Char(string='Monthly Bill',  required=True)
+    service_charge = fields.Char(string='Service Charge',  required=True)
+    duration = fields.Selection([('6', '6 Months'),('12', '12 Months'), ('24', '24 Months')], string='Period',  required=True)
+    free_items = fields.One2many('plan.package', 'paln_id', 'Free Items', help='Package includes free items')
+    paid_items = fields.One2many('plan.package', 'paln_id', 'Free Items', help='Package includes free items')
 contract_plan()
 
+class plan_package(models.Model):
+    """Event"""
+    _name = 'plan.package'
+    _description = 'Plan Packages'       
+
+    name = fields.Char(string='Description',  required=True)
+    plan_id = fields.Many2one('contract.plan', string='Plan', ondelete='cascade')
+    product_id = fields.Many2one('product.product', 'Product', domain=[('sale_ok', '=', True)], required=True, change_default=True, ondelete='restrict')
+    quantity = fields.Float('Quantity')
+    
+plan_package()
     
 
 
