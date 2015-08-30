@@ -1,22 +1,32 @@
 <?xml version="1.0"?>
 <openerp>
-    <data noupdate="1">
+    <data noupdate="0">
     
     
-                <record model="ir.cron" id="to_do_list">
-                <field name="name">Notifying to Do list </field>
-                <field name="interval_number">1</field>
-                <field name="interval_type">days</field>  <!--Its daily-->
-                <field name="numbercall">-1</field>
-                <field name="doall" eval="False"/>
-                <field name="model" eval="'crm.lead'"/>
-                <field name="function" eval="'update_to_do_list'"/>
-                <field name="args" eval="'()'"/>
-                <field name="active" eval="True"/> <!--remove this line while moving to production-->
-            </record>
+        <record model="ir.cron" id="to_do_list">
+            <field name="name">Notifying to Do list </field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>  <!--Its daily-->
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'crm.lead'"/>
+            <field name="function" eval="'update_to_do_list'"/>
+            <field name="args" eval="'()'"/>
+            <field name="active" eval="True"/>
+        </record>
   
   
-  
+        <record model="ir.cron" id="auto_invoice_from_contract">
+            <field name="name">Create invoice from contract</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>  <!--Its daily-->
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'contract.loan'"/>
+            <field name="function" eval="'create_invoice'"/>
+            <field name="args" eval="'()'"/>
+            <field name="active" eval="True"/>
+        </record>
   
   
   
