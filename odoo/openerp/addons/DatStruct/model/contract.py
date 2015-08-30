@@ -59,6 +59,27 @@ class contract_loan(models.Model):
     ph_no_int2           = fields.Char(string='Phone Number')
     free_product_ids     = fields.Many2many('plan.package','free_contract_plan_package','contract_id','plan_line_id')
     paid_product_ids     = fields.Many2many('plan.package','paid_contract_plan_package','contract_id','plan_line_id')
+    
+    
+    
+    @api.onchange('partner_id')
+    def _onchange_partner_id(self):
+        if self.type:
+            self.company_name        = self.partner_id and self.partner_id.parent_id and self.partner_id.parent_id.id or False 
+            self.address             = self.partner_id and self.partner_id.street or ""
+            self.address1            = self.partner_id and self.partner_id.street2 or ""
+            self.city                = self.partner_id and self.partner_id.city or "" 
+            self.state               = self.partner_id and self.partner_id.state_id and self.partner_id.state_id.id or False 
+            self.country_id          = self.partner_id and self.partner_id.country_id and self.partner_id.country_id.id or False
+            self.mobile              = self.partner_id and self.partner_id.mobile or False
+            self.email               = self.partner_id and self.partner_id.email or ''
+            self.occupation          = self.partner_id and self.partner_id.function  or ''
+            self.passport_no         = self.partner_id and self.partner_id.passport_no or False
+            self.passport_issue_date = self.partner_id and self.partner_id.passport_issue_date or False
+            self.country_issue       = self.partner_id and self.partner_id.country_issue and self.partner_id.country_issue.id or False
+            self.expiry_date         = self.partner_id and self.partner_id.expiry_date or False
+    
+    
 
 contract_loan()
 

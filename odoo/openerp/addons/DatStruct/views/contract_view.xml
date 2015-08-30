@@ -249,15 +249,74 @@
             </field>
         </record>
         
- 
-         <record id="act_contract_loan" model="ir.actions.act_window">
-            <field name="res_model">contract.loan</field>
+    <record model="ir.ui.view" id="view_contract_plan_form">
+            <field name="name">Contract</field>
+            <field name="model">contract.plan</field>
+            <field name="arch" type="xml">   
+                <form string="Contract Plan">  
+                 <sheet>
+                  <group>
+                    <field name="name"/>
+                    <field name= 'amount'/>
+                    <field name= 'duration'/>
+                    <field name= 'type' invisible='0'/>
+                  </group>
+                    
+                    <field name= 'free_items'/> 
+                    <field name= 'paid_items'/>
+
+                 </sheet>
+
+                </form>
+            </field>
+         </record>    
+         
+         
+         
+         <record model="ir.ui.view" id="view_contract_plan_tree">
+            <field name="name">Contract Plan</field>
+            <field name="model">contract.plan</field>
+            <field name="arch" type="xml">
+                <tree string="Loans">
+                    <field name="name"/>
+                    <field name= 'amount'/>
+                    <field name= 'duration'/>                                          
+                </tree>
+            </field>
+        </record>
+        
+        
+        
+       <record id="act_contract_plan" model="ir.actions.act_window">
+            <field name="res_model">contract.plan</field>
             <field name="view_type">form</field>
-            <field name="name">Contracts</field>
+            <field name="name">Contract Plans</field>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('type','=','contract')]</field>
             <field name="context">{'default_type': 'contract'}</field>
         </record>
+        
+        
+       <record id="act_loan_plan" model="ir.actions.act_window">
+            <field name="res_model">contract.plan</field>
+            <field name="view_type">form</field>
+            <field name="name">Contract Plans</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type','=','loan')]</field>
+            <field name="context">{'default_type': 'loan'}</field>
+        </record>
+         
+         
+       <record id="act_contract_loan" model="ir.actions.act_window">
+            <field name="res_model">contract.loan</field>
+            <field name="view_type">form</field>
+            <field name="name">Contract</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type','=','contract')]</field>
+            <field name="context">{'default_type': 'contract'}</field>
+        </record>
+         
+         
         
         
         
