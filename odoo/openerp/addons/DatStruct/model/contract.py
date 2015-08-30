@@ -60,8 +60,9 @@ class contract_plan(models.Model):
     amount = fields.Char(string='Monthly Bill',  required=True)
     service_charge = fields.Char(string='Service Charge',  required=True)
     duration = fields.Selection([('6', '6 Months'),('12', '12 Months'), ('24', '24 Months')], string='Period',  required=True)
-    free_items = fields.One2many('plan.package', 'paln_id', 'Free Items', help='Package includes free items')
-    paid_items = fields.One2many('plan.package', 'paln_id', 'Free Items', help='Package includes free items')
+    free_items = fields.One2many('plan.package', 'plan_id', 'Free Items', help='Package includes free items')
+    paid_items = fields.One2many('plan.package', 'plan_id', 'Free Items', help='Package includes free items')
+    type = fields.Selection([('loan', 'Loan'), ('contract', 'Contract')], 'Type')
 contract_plan()
 
 class plan_package(models.Model):
@@ -73,7 +74,7 @@ class plan_package(models.Model):
     plan_id = fields.Many2one('contract.plan', string='Plan', ondelete='cascade')
     product_id = fields.Many2one('product.product', 'Product', domain=[('sale_ok', '=', True)], required=True, change_default=True, ondelete='restrict')
     quantity = fields.Float('Quantity')
-    
+    type = fields.Selection([('paid', 'Paid'), ('free', 'Free')], 'Type')
 plan_package()
     
 
