@@ -3,3 +3,4 @@ import manufacture_procurement
 import procurement_order
 import contract
 import partner
+import account
