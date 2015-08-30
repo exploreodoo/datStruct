@@ -24,11 +24,11 @@ from openerp.exceptions import Warning
 
 
 class contract_loan(models.Model):
-    """Event"""
+    """Contrcts & Loans"""
     _name = 'contract.loan'
     _description = 'Contract or Loan'
     _inherit = ['mail.thread', 'ir.needaction_mixin']    
-
+    state                = fields.Selection([('draft','Draft'),('confirm','confirm'),('cancel','Cancel'),('done','Done')],default='draft',string='State')
     name                 = fields.Char(string='Contract Name',  required=True)
     plan_id              = fields.Many2one('contract.plan', string='Plan ')
     partner_id           = fields.Many2one('res.partner',string="Customer")
@@ -42,12 +42,23 @@ class contract_loan(models.Model):
     state_id             = fields.Many2one('res.country.state',string="State")   
     mobile               = fields.Char(string='Mobile')
     email                = fields.Char(string='Email') 
-    occupation           = fields.Char(string='Description') 
-    description          = fields.Text(string='Job Position') 
+    occupation           = fields.Char(string='Job Position') 
+    description          = fields.Text(string='Description') 
     passport_no          = fields.Char(string='Passport Number')
     passport_issue_date  = fields.Date(string='Passport Issue Date ')
-    country_issue        = fields.Many2one('res.partner',string='Passport Issue Date ')
-    expiry_date         = fields.Date(string='Passport Expairy Date ')
+    country_issue        = fields.Many2one('res.country',string='Passport Country')
+    expiry_date          = fields.Date(string='Passport Expairy Date ')
+    type                 = fields.Selection([('loan','Loan'),('contract','Contract')],string='Type')  
+    uae_reference1       = fields.Char(string='Reference')
+    ph_no_uae1           = fields.Char(string='Phone Number')
+    uae_reference2       = fields.Char(string='Reference') 
+    ph_no_uae2           = fields.Char(string='Phone Number')
+    int_reference1       = fields.Char(string='Reference')
+    ph_no_int1           = fields.Char(string='Phone Number')
+    int_reference2       = fields.Char(string='Reference') 
+    ph_no_int2           = fields.Char(string='Phone Number')
+    free_product_ids     = fields.Many2many('plan.package','free_contract_plan_package','contract_id','plan_line_id')
+    paid_product_ids     = fields.Many2many('plan.package','paid_contract_plan_package','contract_id','plan_line_id')
 
 contract_loan()
 
@@ -60,8 +71,8 @@ class contract_plan(models.Model):
     amount = fields.Char(string='Monthly Bill',  required=True)
     service_charge = fields.Char(string='Service Charge',  required=True)
     duration = fields.Selection([('6', '6 Months'),('12', '12 Months'), ('24', '24 Months')], string='Period',  required=True)
-    free_items = fields.One2many('plan.package', 'paln_id', 'Free Items', help='Package includes free items')
-    paid_items = fields.One2many('plan.package', 'paln_id', 'Free Items', help='Package includes free items')
+    free_items = fields.One2many('plan.package', 'plan_id', 'Free Items', help='Package includes free items')
+    paid_items = fields.One2many('plan.package', 'plan_id', 'Free Items', help='Package includes free items')
 contract_plan()
 
 class plan_package(models.Model):
