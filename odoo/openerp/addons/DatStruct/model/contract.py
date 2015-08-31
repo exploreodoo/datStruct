@@ -21,7 +21,7 @@
 
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning, except_orm
-from dateutil.relativedelta import relativedelta
+from dateutil import relativedelta, parser
 
 class contract_loan(models.Model):
 
@@ -63,8 +63,8 @@ class contract_loan(models.Model):
     ph_no_int1           = fields.Char(string='Phone Number')
     int_reference2       = fields.Char(string='Reference') 
     ph_no_int2           = fields.Char(string='Phone Number')
-    free_product_ids     = fields.Many2many('plan.package','free_contract_plan_package','contract_id','plan_line_id')
-    paid_product_ids     = fields.Many2many('plan.package','paid_contract_plan_package','contract_id','plan_line_id')
+    free_items     = fields.Many2many('plan.package','free_contract_plan_package','contract_id','plan_line_id')
+    paid_items     = fields.Many2many('plan.package','paid_contract_plan_package','contract_id','plan_line_id')
     next_invoice_date = fields.Date('Next Invoice Date', readonly=1)
     invoice_rule = fields.Selection([
             ('1', 'Month(s)'),
@@ -72,7 +72,7 @@ class contract_loan(models.Model):
             ], 'Recurrency', help="Invoice automatically repeat at specified interval")    
     manager_id = fields.Many2one('res.users', 'Maneger')
     invoiced = fields.Boolean('Invoiced', _compute='_compute_invoice')
-    
+    company_id = fields.Many2one('res.company', 'Company')
     
     
     @api.onchange('partner_id')
@@ -140,27 +140,36 @@ class contract_loan(models.Model):
            'journal_id': journal_ids and journal_ids.id or False,
            'date_invoice': fields.Date.context_today(self),
            'origin': self.name,
-           'self_id':self.id,
+           'contract_id':self.id,
            'fiscal_position': fpos_id,
            'payment_term': partner_payment_term,
            'company_id': self.company_id.id or False,
-           'user_id': self.manager_id.id or uid,
-           'invoice_lines':invoice_lines
+           'user_id': self.manager_id.id or self.env.uid,
+           'invoice_line':invoice_lines
         }
         return self.env['account.invoice'].create(invoice)
 
 
     @api.model
-    def create_invoice(self):
+    def create_invoice(self):        
+        for row in self.search([('state', '=', 'running'), ('next_invoice_date', '<=', fields.Date.context_today(self))]):                                        
+            row._prepare_invoice()
+            duration = int(row.invoice_rule)
+            next_date = parser.parse(fields.Date.context_today(self)) +  relativedelta.relativedelta(months=+duration)            
+            row.next_invoice_date= next_date.strftime('%Y-%m-%d')
+    
 
-        for row in self.search([('state', '=', 'running'), ('next_invoice_date', '<=', fields.Date.context_today(self))]):
-            try:
-                row._prepare_invoice()
-                duration = int(row.invoice_rule)
-                next_date = fields.Date.context_today(self) +  relativedelta(months=+duration)
-                row.next_invoice_date= next_date
-            except:
-                pass        
+    @api.multi
+    def dummy(self):
+        return self.create_invoice()
+    @api.multi
+    def action_run(self):
+        for row in self:
+            #TODO check all validations here
+            row.next_invoice_date = fields.Date.context_today(self)
+            row.state='running'
+            row.create_invoice()
+
     @api.multi
     def view_invoice(self):
         ids = [row.id for row in self]    

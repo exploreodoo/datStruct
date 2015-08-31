@@ -8,9 +8,11 @@
             <field name="model">contract.loan</field>
             <field name="arch" type="xml">   
                 <form string="Contract">  
-                   <header>
-                     <field name='state' widget='statusbar' readonly='1'/>
-                     <button name='view_invoice' string='View Invoice' attrs="{'invisible':[('invoiced', '=', False)]}"/>
+                  <header>
+                    <button name='view_invoice' string='View Invoice' type='object' attrs="{'invisible':[('invoiced', '=', False)]}"/>
+                    <button name='action_run' string='Run' states='draft' type='object'/>
+                    <field name='state' widget='statusbar' readonly='1'/>
+                     
                    </header>                  
                                  
                       <sheet>
@@ -39,6 +41,8 @@
                                 <field name= 'mobile'/>
                                 <field name= 'email'/>
                                 <field name= 'occupation'/> 
+                                <field name='company_id'/>
+                                <button name='dummy' type='object' string='dummy'/>
                            </group>                                                                                             
                        </group>
                        
@@ -56,10 +60,12 @@
                      <notebook>
                         <page string='Products'>
                             <seperator string ='Free Products'/>
-                             <field name='free_product_ids'/>
+                             <field name='free_items'/>
                              <seperator string ='Paid Products'/>    
-                             <field name='paid_product_ids'/>  
-                             <field name='description' placeholder='Put your Description here'/>                       
+                             <field name='paid_items'/>  
+                             <field name='description' placeholder='Put your Description here'/>   
+                                                          <field name='next_invoice_date'/>
+                             <field name='invoice_rule'/>                    
                         </page>  
                         <page string='References'>
                            <group>
@@ -155,11 +161,12 @@
                      
                         <page string='Products'>
                             <separator string ='Free Products'/>
-                             <field name='free_product_ids'/>
+                             <field name='free_items'/>
                              <separator string ='Paid Products'/>    
-                             <field name='paid_product_ids'/>     
+                             <field name='paid_items'/>     
                              <field name='description' placeholder='Put your Description here'/> 
-                             
+                             <field name='next_invoice_date'/>
+                             <field name='invoice_rule'/>
                         </page>  
                         
                         <page string='References'>
