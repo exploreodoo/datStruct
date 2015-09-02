@@ -23,8 +23,7 @@
                         </div>
                        <group>
                             <group>
-                                <field name='invoiced' invisible='1'/>
-                                <field name= 'plan_id'/>
+                                <field name='invoiced' invisible='1'/>                                
                                 <field name= 'partner_id'/>
                                 <field name= 'company_name'/>
                                 <field name= 'address'/>
@@ -32,7 +31,7 @@
                                 <field name='city'/>
                                 <field name='state_id'/>
                                 <field name='country_id'/>
-                               
+                                <field name= 'plan_id'/>
                             </group>
                              <group> 
                                 <field name= 'type' invisible='1'/>  
@@ -41,8 +40,9 @@
                                 <field name= 'mobile'/>
                                 <field name= 'email'/>
                                 <field name= 'occupation'/> 
-                                <field name='company_id'/>
-                                <button name='dummy' type='object' string='dummy'/>
+                                <field name= 'manager_id'/>
+                                <field name= 'company_id'/>
+                                <!-- <button name='dummy' type='object' string='dummy'/> -->
                            </group>                                                                                             
                        </group>
                        
@@ -60,9 +60,23 @@
                      <notebook>
                         <page string='Products'>
                             <seperator string ='Free Products'/>
-                             <field name='free_items'/>
-                             <seperator string ='Paid Products'/>    
-                             <field name='paid_items'/>  
+                             <field name='free_items' context="{'default_type':'free'}" domain="[('plan_id', '=', plan_id), ('type', '=', 'free')]">
+                                <tree editable='bottom'>
+                                    <field name='product_id'/>
+                                    <field name='name'/>
+                                    <field name='quantity'/>
+                                </tree>
+                             </field>
+                             <seperator string ='Paid Products'/>  
+                             <label for='paid_items'/>
+                             <field name='paid_items' context="{'default_type':'paid'}" domain="[('plan_id', '=', plan_id), ('type', '=', 'paid')]">
+                                <tree editable='bottom'>
+                                    <field name='product_id'/>
+                                    <field name='name'/>
+                                    <field name='quantity'/>
+                                </tree>
+                             </field> 
+
                              <field name='description' placeholder='Put your Description here'/>   
                                                           <field name='next_invoice_date'/>
                              <field name='invoice_rule'/>                    
@@ -259,26 +273,40 @@
         </record>
         
     <record model="ir.ui.view" id="view_contract_plan_form">
-            <field name="name">Contract</field>
-            <field name="model">contract.plan</field>
-            <field name="arch" type="xml">   
-                <form string="Contract Plan">  
-                 <sheet>
+        <field name="name">Contract</field>
+        <field name="model">contract.plan</field>
+        <field name="arch" type="xml">   
+            <form string="Contract Plan">  
+              <sheet>
                   <group>
                     <field name="name"/>
                     <field name= 'amount'/>
                     <field name= 'duration'/>
-                    <field name= 'type' invisible='0'/>
+                    <field name= 'type' invisible='1'/>
                   </group>
-                    
-                    <field name= 'free_items'/> 
-                    <field name= 'paid_items'/>
+                
+                  <field name= 'free_items' context="{'default_type':'free'}">
+                      <tree editable='bottom'>
+                          <field name='product_id'/>
+                          <field name='name'/>
+                          <field name='quantity'/>
+                          <field name='type'/>
+                      </tree>
+                  </field> 
+                  <field name= 'paid_items' context="{'default_type':'paid'}">
+                      <tree editable='bottom'>
+                          <field name='product_id'/>
+                          <field name='name'/>
+                          <field name='quantity'/>
+                          <field name='type'/>
+                      </tree>
+                  </field> 
+              </sheet>
+            </form>
+        </field>
+     </record> 
 
-                 </sheet>
 
-                </form>
-            </field>
-         </record>    
          
          
          

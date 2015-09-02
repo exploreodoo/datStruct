@@ -27,8 +27,8 @@ class contract_loan(models.Model):
 
 
     @api.one    
-    def _compute_invoice(self):
-        self.invoiced = True #if self.env['account.invoice'].search([('contract_id', '=', self.id)]) else False        
+    def _compute_invoice(self):    
+        self.invoiced = True if self.env['account.invoice'].search([('contract_id', '=', self.id)]) else False        
 
     """Contrcts & Loans"""
     _name = 'contract.loan'
@@ -63,16 +63,20 @@ class contract_loan(models.Model):
     ph_no_int1           = fields.Char(string='Phone Number')
     int_reference2       = fields.Char(string='Reference') 
     ph_no_int2           = fields.Char(string='Phone Number')
-    free_items     = fields.Many2many('plan.package','free_contract_plan_package','contract_id','plan_line_id')
-    paid_items     = fields.Many2many('plan.package','paid_contract_plan_package','contract_id','plan_line_id')
+    free_items = fields.Many2many('plan.package','free_contract_plan_package','contract_id','plan_line_id', 
+        domain=[('type', '=', 'free')])
+    paid_items = fields.Many2many('plan.package','paid_contract_plan_package','contract_id','plan_line_id', 
+        domain=[('type', '=', 'free')])
     next_invoice_date = fields.Date('Next Invoice Date', readonly=1)
     invoice_rule = fields.Selection([
             ('1', 'Month(s)'),
             ('12', 'Year(s)'),
             ], 'Recurrency', help="Invoice automatically repeat at specified interval")    
-    manager_id = fields.Many2one('res.users', 'Maneger')
-    invoiced = fields.Boolean('Invoiced', _compute='_compute_invoice')
-    company_id = fields.Many2one('res.company', 'Company')
+    manager_id = fields.Many2one('res.users', 'Manager', 
+        default=lambda self: self.env.user, track_visibility='onchange')
+    invoiced = fields.Boolean('Invoiced', compute='_compute_invoice')
+    company_id = fields.Many2one('res.company', 'Company', 
+        default=lambda self: self.env['res.company']._company_default_get('contract.loan'))
     
     
     @api.onchange('partner_id')
@@ -192,11 +196,12 @@ class contract_plan(models.Model):
 
     name = fields.Char(string='Plan Name',  required=True)
     amount = fields.Char(string='Monthly Bill',  required=True)
-    service_charge = fields.Char(string='Service Charge',  required=True)
+    service_charge = fields.Char(string='Service Charge')
     duration = fields.Selection([('6', '6 Months'),('12', '12 Months'), ('24', '24 Months')], string='Period',  required=True)
-    free_items = fields.One2many('plan.package', 'plan_id', 'Free Items', help='Package includes free items')
-    paid_items = fields.One2many('plan.package', 'plan_id', 'Free Items', help='Package includes free items')
-    type = fields.Selection([('loan', 'Loan'), ('contract', 'Contract')], 'Type')
+    free_items = fields.One2many('plan.package', 'plan_id', 'Free Items', help='Package includes free items', domain=[('type', '=', 'free')])
+    paid_items = fields.One2many('plan.package', 'plan_id', 'Free Items', help='Package includes free items', domain=[('type', '=', 'paid')])
+    type = fields.Selection([('loan', 'Loan'), ('contract', 'Contract')], 'Type', default='contract')
+
 contract_plan()
 
 class plan_package(models.Model):
