@@ -49,6 +49,8 @@ This application allows you to manage your Day by Day processes easily    """,
         'report/account_invoice_report.xml',
         'report/purchase_order_report.xml',
         'report/reports.xml',
+        'report/report_loan_contract.xml',
+        'contract_report.xml'
 
              
     ],

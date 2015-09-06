@@ -77,6 +77,12 @@ class contract_loan(models.Model):
     invoiced = fields.Boolean('Invoiced', compute='_compute_invoice')
     company_id = fields.Many2one('res.company', 'Company', 
         default=lambda self: self.env['res.company']._company_default_get('contract.loan'))
+        
+    contact_address1      = fields.Text('Contact Address') 
+    contact_address2      = fields.Text('Contact Address') 
+    contact_address_international1      = fields.Text('Contact Address') 
+    contact_address_international2      = fields.Text('Contact Address') 
+    date                  = fields.Date(string='Date')
     
     
     @api.onchange('partner_id')
