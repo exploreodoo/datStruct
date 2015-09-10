@@ -85,6 +85,22 @@ class contract_loan(models.Model):
     date                  = fields.Date(string='Date')
     
     
+    @api.onchange('plan_id')
+    def on_change_plan_id(self): 
+        if self.plan_id :
+            self.free_items=[free_items.id for free_items in self.plan_id.free_items]
+            self.paid_items=[paid_item.id for paid_item in self.plan_id.paid_items]
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     @api.onchange('partner_id')
     def _onchange_partner_id(self):
         if self.type:
