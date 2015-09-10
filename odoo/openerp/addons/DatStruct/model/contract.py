@@ -66,7 +66,7 @@ class contract_loan(models.Model):
     free_items = fields.Many2many('plan.package','free_contract_plan_package','contract_id','plan_line_id', 
         domain=[('type', '=', 'free')])
     paid_items = fields.Many2many('plan.package','paid_contract_plan_package','contract_id','plan_line_id', 
-        domain=[('type', '=', 'free')])
+        domain=[('type', '=', 'paid')])
     next_invoice_date = fields.Date('Next Invoice Date', readonly=1)
     invoice_rule = fields.Selection([
             ('1', 'Month(s)'),
@@ -87,7 +87,9 @@ class contract_loan(models.Model):
     
     @api.onchange('plan_id')
     def on_change_plan_id(self): 
-        if self.plan_id :
+        self.free_items= None 
+        self.paid_items= None   
+        if self.plan_id :            
             self.free_items=[free_items.id for free_items in self.plan_id.free_items]
             self.paid_items=[paid_item.id for paid_item in self.plan_id.paid_items]
 
