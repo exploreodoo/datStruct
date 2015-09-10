@@ -44,8 +44,8 @@ class contract_loan(models.Model):
     city                 = fields.Char(string= 'City') 
     gender               = fields.Selection([('male','Male'),('female','Female')],string='Gender')  
     dob                  = fields.Date(string='DOB')
-    country_id           = fields.Many2one('res.country',string="Nationality")
-    state_id             = fields.Many2one('res.country.state',string="State")   
+    country_id           = fields.Many2one('res.country', string="Nationality")
+    state_id             = fields.Many2one('res.country.state', string="State")   
     mobile               = fields.Char(string='Mobile')
     email                = fields.Char(string='Email') 
     occupation           = fields.Char(string='Job Position') 
@@ -102,13 +102,13 @@ class contract_loan(models.Model):
     
     
     @api.onchange('partner_id')
-    def _onchange_partner_id(self):
+    def _onchange_partner_id(self):        
         if self.type:
             self.company_name        = self.partner_id and self.partner_id.parent_id and self.partner_id.parent_id.id or False 
             self.address             = self.partner_id and self.partner_id.street or ""
             self.address1            = self.partner_id and self.partner_id.street2 or ""
             self.city                = self.partner_id and self.partner_id.city or "" 
-            self.state               = self.partner_id and self.partner_id.state_id and self.partner_id.state_id.id or False 
+            self.state_id            = self.partner_id and self.partner_id.state_id and self.partner_id.state_id.id or None 
             self.country_id          = self.partner_id and self.partner_id.country_id and self.partner_id.country_id.id or False
             self.mobile              = self.partner_id and self.partner_id.mobile or False
             self.email               = self.partner_id and self.partner_id.email or ''
