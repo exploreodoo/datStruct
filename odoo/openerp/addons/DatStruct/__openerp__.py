@@ -50,8 +50,8 @@ This application allows you to manage your Day by Day processes easily    """,
         'report/purchase_order_report.xml',
         'report/reports.xml',
         'report/report_loan_contract.xml',
-        'contract_report.xml'
-
+        'contract_report.xml',
+        'security/ir.model.access.csv'
              
     ],
     'installable': True,
