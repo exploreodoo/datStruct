@@ -37,7 +37,7 @@ class contract_loan(models.Model):
     state                = fields.Selection([('draft','Draft'),('running','Running'),('cancel','Cancel'),('done','Done')],default='draft',string='State')
     name                 = fields.Char(string='Contract Name',  required=True)
     plan_id              = fields.Many2one('contract.plan', string='Plan ')
-    partner_id           = fields.Many2one('res.partner',string="Customer")
+    partner_id           = fields.Many2one('res.partner',string="Customer", domain=[('customer', '=', True)])
     company_name         = fields.Many2one('res.partner')
     address              = fields.Char(string= 'Address')
     address1             = fields.Char(string= 'Address') 
@@ -83,6 +83,7 @@ class contract_loan(models.Model):
     contact_address_international1      = fields.Text('Contact Address') 
     contact_address_international2      = fields.Text('Contact Address') 
     date                  = fields.Date(string='Date')
+    emirates_id           = fields.Char('Eerides ID')
     
     
     @api.onchange('plan_id')
@@ -131,8 +132,8 @@ class contract_loan(models.Model):
         if not partner:
             raise except_orm(_('No Customer Defined!'),_("You must first select a Customer for Contract %s!") % self.name )
 
-        fpos_id = fpos_obj.get_fiscal_position(partner.company_id.id, partner.id)
-        journal_ids = journal_obj.search([('type', '=','sale'),('company_id', '=', self.company_id.id or False)], limit=1)
+        #fpos_id = fpos_obj.get_fiscal_position(partner.company_id.id, partner.id)
+        journal_ids = journal_obj.search([('type', '=','sale'),('company_id', '=', self.company_id.id or False)], limit=1)        
         if not journal_ids:
             raise except_orm(_('Error!'),
             _('Please define a sale journal for the company "%s".') % (self.company_id.name or '', ))
@@ -154,7 +155,7 @@ class contract_loan(models.Model):
             invoice_lines.append((0, 0, {
                 'name': line.name,
                 'account_id': account_id,            
-                'price_unit': line.price_unit or 0.0,
+                'price_unit': line.product_id and line.product_id.list_price or 0.0,
                 'quantity': line.quantity,            
                 'product_id': line.product_id.id or False,                
             })) 
@@ -169,13 +170,12 @@ class contract_loan(models.Model):
            'date_invoice': fields.Date.context_today(self),
            'origin': self.name,
            'contract_id':self.id,
-           'fiscal_position': fpos_id,
+          # 'fiscal_position': fpos_id,
            'payment_term': partner_payment_term,
            'company_id': self.company_id.id or False,
            'user_id': self.manager_id.id or self.env.uid,
            'invoice_line':invoice_lines
-        }
-        raw_input(invoice)
+        }        
         return self.env['account.invoice'].create(invoice)
 
 
@@ -198,7 +198,11 @@ class contract_loan(models.Model):
             #TODO check all validations here
             row.next_invoice_date = fields.Date.context_today(self)
             row.state='running'
-            row.create_invoice()
+            # row.create_invoice()
+            row._prepare_invoice()
+            duration = int(row.invoice_rule)
+            next_date = parser.parse(fields.Date.context_today(self)) +  relativedelta.relativedelta(months=+duration)            
+            row.next_invoice_date= next_date.strftime('%Y-%m-%d')
 
     @api.multi
     def view_invoice(self):
@@ -221,12 +225,12 @@ class contract_plan(models.Model):
     _description = 'Contract plan'       
 
     name = fields.Char(string='Plan Name',  required=True)
-    amount = fields.Char(string='Monthly Bill',  required=True)
+    amount = fields.Char(string='Monthly Bill')
     service_charge = fields.Char(string='Service Charge')
     duration = fields.Selection([('6', '6 Months'),('12', '12 Months'), ('24', '24 Months')], string='Period',  required=True)
     free_items = fields.One2many('plan.package', 'plan_id', 'Free Items', help='Package includes free items', domain=[('type', '=', 'free')])
     paid_items = fields.One2many('plan.package', 'plan_id', 'Free Items', help='Package includes free items', domain=[('type', '=', 'paid')])
-    type = fields.Selection([('loan', 'Loan'), ('contract', 'Contract')], 'Type', default='contract')
+    type = fields.Selection([('loan', 'Loan'), ('contract', 'Contract')], 'Type', default='contract', required=True)
 
 contract_plan()
 

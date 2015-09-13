@@ -24,7 +24,8 @@
                         </div>
                        <group>
                             <group>
-                                <field name='invoiced' invisible='1'/>                                
+                                <field name='invoiced' invisible='1'/>     
+                                <field name='type' invisible='1'/>                           
                                 <field name= 'partner_id'/>
                                 <field name= 'company_name'/>
                                 <field name= 'address'/>
@@ -32,7 +33,7 @@
                                 <field name='city'/>
                                 <field name='state_id'/>
                                 <field name='country_id'/>
-                                <field name= 'plan_id'/>
+                                <field name= 'plan_id' domain="[('type', '=', type)]"/>
                             </group>
                              <group> 
                                 <field name= 'type' invisible='1'/> 
@@ -177,7 +178,7 @@
                     <field name="name"/>
                     <field name= 'amount'/>
                     <field name= 'duration'/>
-                    <field name= 'type' invisible='1'/>
+                    <field name= 'type' invisible='0'/>
                   </group>
                 
                   <field name= 'free_items' context="{'default_type':'free'}">
