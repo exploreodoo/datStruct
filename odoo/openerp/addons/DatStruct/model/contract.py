@@ -83,6 +83,7 @@ class contract_loan(models.Model):
     contact_address_international1      = fields.Text('Contact Address') 
     contact_address_international2      = fields.Text('Contact Address') 
     date                  = fields.Date(string='Date')
+    emirates_id           = fields.Char('Eerides ID')
     
     
     @api.onchange('plan_id')
@@ -131,7 +132,7 @@ class contract_loan(models.Model):
         if not partner:
             raise except_orm(_('No Customer Defined!'),_("You must first select a Customer for Contract %s!") % self.name )
 
-        fpos_id = fpos_obj.get_fiscal_position(partner.company_id.id, partner.id)
+        #fpos_id = fpos_obj.get_fiscal_position(partner.company_id.id, partner.id)
         journal_ids = journal_obj.search([('type', '=','sale'),('company_id', '=', self.company_id.id or False)], limit=1)
         if not journal_ids:
             raise except_orm(_('Error!'),
@@ -150,11 +151,11 @@ class contract_loan(models.Model):
             account_id = res.property_account_income.id
             if not account_id:
                 account_id = res.categ_id.property_account_income_categ.id
-            account_id = fpos_obj.map_account(fiscal_position, account_id)        
+            #account_id = fpos_id.map_account(account_id)       # commented to aviod bug  
             invoice_lines.append((0, 0, {
                 'name': line.name,
                 'account_id': account_id,            
-                'price_unit': line.price_unit or 0.0,
+                'price_unit': line.product_id and line.product_id.list_price or 0.0,
                 'quantity': line.quantity,            
                 'product_id': line.product_id.id or False,                
             })) 
@@ -169,7 +170,7 @@ class contract_loan(models.Model):
            'date_invoice': fields.Date.context_today(self),
            'origin': self.name,
            'contract_id':self.id,
-           'fiscal_position': fpos_id,
+          # 'fiscal_position': fpos_id,
            'payment_term': partner_payment_term,
            'company_id': self.company_id.id or False,
            'user_id': self.manager_id.id or self.env.uid,
