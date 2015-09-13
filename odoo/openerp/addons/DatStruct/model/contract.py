@@ -83,7 +83,7 @@ class contract_loan(models.Model):
     contact_address_international1      = fields.Text('Contact Address') 
     contact_address_international2      = fields.Text('Contact Address') 
     date                  = fields.Date(string='Date')
-    emirates_id           = fields.Char('Eerides ID')
+    emirates_id           = fields.Char('Emerites_id')
     
     
     @api.onchange('plan_id')
