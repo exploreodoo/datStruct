@@ -27,6 +27,8 @@
                                 <field name='invoiced' invisible='1'/>     
                                 <field name='type' invisible='1'/>                           
                                 <field name= 'partner_id'/>
+                                <label for = 'emirates_id' string= "Emerites_id"/>
+                                <field name= 'emirates_id' nolabel="1"/>
                                 <field name= 'company_name'/>
                                 <field name= 'address'/>
                                 <field name= 'address1'/>
