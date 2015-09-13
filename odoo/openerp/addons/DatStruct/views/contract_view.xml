@@ -11,6 +11,7 @@
                   <header>
                     <button name='view_invoice' string='View Invoice' type='object' attrs="{'invisible':[('invoiced', '=', False)]}"/>
                     <button name='action_run' string='Run' states='draft' type='object'/>
+                    <button name='action_done' string='Complete' states='running' type='object'/>
                     <field name='state' widget='statusbar' readonly='1'/>
                      
                    </header>                  
@@ -61,6 +62,7 @@
                      <notebook>
                         <page string='Products'>
                             <seperator string ='Free Products'/>
+                            <label for='free_items'/>
                              <field name='free_items' context="{'default_type':'free'}" domain="[('plan_id', '=', plan_id), ('type', '=', 'free')]">
                                 <tree editable='bottom'>
                                     <field name='product_id'/>

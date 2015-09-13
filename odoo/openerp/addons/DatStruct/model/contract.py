@@ -71,7 +71,7 @@ class contract_loan(models.Model):
     invoice_rule = fields.Selection([
             ('1', 'Month(s)'),
             ('12', 'Year(s)'),
-            ], 'Recurrency', help="Invoice automatically repeat at specified interval")    
+            ], 'Recurrency', default='1', required='1', help="Invoice automatically repeat at specified interval")    
     manager_id = fields.Many2one('res.users', 'Manager', 
         default=lambda self: self.env.user, track_visibility='onchange')
     invoiced = fields.Boolean('Invoiced', compute='_compute_invoice')
@@ -150,7 +150,7 @@ class contract_loan(models.Model):
             account_id = res.property_account_income.id
             if not account_id:
                 account_id = res.categ_id.property_account_income_categ.id
-            account_id = fpos_obj.map_account(fiscal_position, account_id)        
+            account_id = fpos_obj.map_account(account_id)
             invoice_lines.append((0, 0, {
                 'name': line.name,
                 'account_id': account_id,            
@@ -175,6 +175,7 @@ class contract_loan(models.Model):
            'user_id': self.manager_id.id or self.env.uid,
            'invoice_line':invoice_lines
         }
+        raw_input(invoice)
         return self.env['account.invoice'].create(invoice)
 
 
@@ -184,12 +185,13 @@ class contract_loan(models.Model):
             row._prepare_invoice()
             duration = int(row.invoice_rule)
             next_date = parser.parse(fields.Date.context_today(self)) +  relativedelta.relativedelta(months=+duration)            
-            row.next_invoice_date= next_date.strftime('%Y-%m-%d')
+            row.next_invoice_date= next_date.strftime('%Y-%m-%d')            
     
 
     @api.multi
-    def dummy(self):
-        return self.create_invoice()
+    def action_done(self):        
+        return self.write({'state':'done'})
+
     @api.multi
     def action_run(self):
         for row in self:
