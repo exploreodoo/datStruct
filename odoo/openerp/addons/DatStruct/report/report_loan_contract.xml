@@ -4,215 +4,221 @@
     
 <template id="report_contract_document">
 <t t-name="DatStruct.report_contract_document">
+<t t-name="DatStruct.report_contract_document">
     <t t-name="DatStruct.report_contract_document">
     <t t-call="report.external_layout">
         <div class="page">
-            <div class="row" style="background-color:#568eff;color:#ffffff;">
-               <div class="col-xs-5 col-xs-offset-1">
-                  <h1><strong>Customer Record  </strong></h1><br/>
-                </div >            
- 
-             </div>
-
-           <div class="row">
-                <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px"  >
-                         <strong>Date:</strong> <span  t-if="o.date"><span t-field="o.date"/></span>   
+            <br/>
+           <br/>
+            <br/>
+           <br/>
+           <div class="row" >
+                <div  style="font-size:20px" class="col-xs-5 col-xs-offset-1" >
+                         <strong>Date:</strong> <span t-if="o.date"><span t-field="o.date"/></span>   
                </div>
           </div>
-           
-
-
-           <div class="row">
-                <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px"  >
-                         <strong>Name of the Customer</strong> <span  t-if="o.partner_id"><span t-field="o.partner_id.name"/></span>   
+           <div class="row"  style="margin-left:0px;">
+                <div class="col-xs-50 col-xs-offset-1" style="font-size:20px">
+                         <strong>Name of the Organisation/Customer:</strong> <span t-if="o.partner_id"><span t-field="o.partner_id.name"/></span>   
                </div>
 
             </div>
 
-           <div class="row">
-                <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px" >
-                         <strong>Name of the Company</strong> <span t-if="o.company_name"><span t-field="o.company_name.name"/></span>   
+           <div class="row" style="margin-left:0px;">
+                <div class="col-xs-25 col-xs-offset-1" style="font-size:20px">
+                         <strong>Nationality:</strong> <span t-if="o.country_id"><span t-field="o.country_id.name"/></span>   
                </div>
+
             </div>
-
-
-           <div class="row">
-                <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px"  >
-                         <strong>Date</strong> <span  t-if="o.dob"><span t-field="o.dob"/></span>   
+        <div class="row" style="margin-left:0px;">
+                <div class="col-xs-25 col-xs-offset-1" style="font-size:20px">
+                         <strong>Passport Number:</strong> <span t-if="o.passport_no"><span t-field="o.passport_no"/></span>   
                </div>
           </div>
-           
-
-
-
-
-
-
-
-
-           <div class="row">
-                <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px" >
-                          <strong>Gender</strong> 
-                         <span t-if="o.gender == 'male'">Male </span>   
-                         <span t-if="o.gender == 'female'">Female </span>   
+           <div class="row"    style="margin-left:0px;">
+                <div class="col-xs-30 col-xs-offset-1" style="font-size:20px">
+                         <strong>Mobile:</strong> <span t-if="o.mobile"><span t-field="o.mobile"/></span>   
                </div>
-            </div>
+          </div>
 
-
-
-
-
-
-
-           <div class="row">
-                <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px" >
-                         <strong>Country</strong> <span t-if="o.country_id"><span t-field="o.country_id.name"/></span>   
-               </div>
-
-            </div>
-
-           <div class="row">
-                <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px" >
-                         <strong>Occupation</strong> <span t-if="o.occupation"><span t-field="o.occupation"/></span>   
-               </div>
-
-            </div>
-
-           <div class="row">
-                <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px" >
-                         <strong>Mobile</strong> <span t-if="o.mobile"><span t-field="o.mobile"/></span>   
-               </div>
-                <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px">
-                         <strong>Email</strong> <span t-if="o.email"><span t-field="o.email"/></span>   
-               </div>
-
-            </div>
-           <div class="row">
-                <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px">
-                         <strong>Address</strong> <span t-if="o.partner_id"><span t-field="o.address"/>
+           <div class="row"  style="margin-left:0px;">
+                <div class="col-xs-30 col-xs-offset-1" style="font-size:20px">
+                         <strong>Address:</strong> <span t-if="o.partner_id"><span t-field="o.address"/>
                           <span t-field="o.address1"/>
                          <span t-field="o.city"/>
                                </span>   
                </div>
 
-            </div>
-           <div class="row"  style="font-size:20px" >
-               <div class="col-xs-5 col-xs-offset-1"  >
-                <h1><strong>Passport Datails</strong></h1>
-             </div>
-            </div>
-
-
-           <div class="row">
-                <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px" >
-                         <strong>Passport Number</strong> <span t-if="o.passport_no"><span t-field="o.passport_no"/></span>   
+           <div class="row"  style="margin-left:0px;">
+                <div class="col-xs-30 col-xs-offset-1" style="font-size:20px">
+                         <strong>Emirates ID:</strong> <span t-if="o.emirates_id"><span t-field="o.emirates_id"/></span>   
                </div>
-                <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px" >
-                         <strong>Passport Issue Place</strong> <span t-if="o.country_issue"><span t-field="o.country_issue"/></span>   
-               </div>
-        </div>
-
-           <div class="row">
-                <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px">
-                         <strong>Passport Issue Date </strong> <span t-if="o.passport_issue_date"><span t-field="o.passport_issue_date"/>                                    </span>   
-               </div>
-                <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px">
-                         <strong>Passport Expiry Date</strong> <span t-if="o.expiry_date"><span t-field="o.expiry_date"/></span>   
+          </div>
+           <div class="row" style="margin-left:0px;">
+                <div class="col-xs-30 col-xs-offset-1" style="font-size:20px">
+                         <strong>Email :</strong> <span t-if="o.email"><span t-field="o.email"/></span>   
                </div>
           </div>
 
-
-           <div class="row"  style="font-size:20px" >
-              <div class="col-xs-5 col-xs-offset-1"  >
-                 <h2><strong>Contact Details in UAE</strong> </h2>
-             </div>
+           <div class="row" style="margin-left:0px; ">
+                  <div class="col-xs-30 col-xs-offset-1"  style="font-size:20px" >
+                <strong>Contact details Home Country</strong> 
+                 </div>
             </div>
 
-
-           <div class="row">
-                <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px" >
-                    <strong>Name</strong> <span t-if="o.uae_reference1"><span t-field="o.uae_reference1"/></span>   
+        <div class="row">
+                <div class="col-xs-5 col-xs-offset-1" style="font-size:20px">
+                    <strong>Name :</strong> <span t-if="o.int_reference1"><span t-field="o.int_reference1"/></span>   
                </div>
-                <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px" >
-                    <strong>Name</strong> <span t-if="o.uae_reference2"><span t-field="o.uae_reference2"/></span>   
-                 </div>
              </div>     
 
+   <div class="row">
+    	<div class="col-xs-5 col-xs-offset-1" style="font-size:20px">
+    		  <strong>Phone Number :</strong> <span t-if="o.ph_no_int2"><span t-field="o.ph_no_int2"/></span>   
+       </div>
+
+    </div>
+   <div class="row">
+    	<div class="col-xs-5 col-xs-offset-1" style="font-size:20px">
+    		<strong>Address :</strong> <span t-if="o.contact_address_international1"><span t-field="o.contact_address2"/></span>    
+        </div>
+   </div>
+
+
            <div class="row">
-                <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px" >
-                    <strong>Phone Number</strong> <span t-if="o.ph_no_uae1"><span t-field="o.ph_no_uae1"/></span>   
+                <div class="col-xs-5 col-xs-offset-1" style="font-size:20px">
+                         <strong>Date Start:</strong> <span t-if="o.date"><span t-field="o.date"/></span>   
                </div>
-             <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px" >
-
-                    <strong>Phone Number</strong> <span t-if="o.ph_no_uae2"><span t-field="o.ph_no_uae2"/></span>   
-
-
-                </div>
-            </div> 
-
-
+          </div>
            <div class="row">
-                <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px" >
-                    <strong>Address</strong> <span t-if="o.contact_address1"><span t-field="o.contact_address1"/></span>   
-                </div>
-                <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px">
+                <div class="col-xs-5 col-xs-offset-1" style="font-size:20px">
+                         <strong>Date End:</strong> <span t-if="o.date"><span t-field="o.date"/></span>   
+               </div>
+         </div>
+   <div class="row" style="margin-left:0px; ">
+    	<div class="col-xs-50 col-xs-offset-1" style="font-size:20px">
+    		  Select Items in the Contract    
+       </div>
 
-                    <strong>Address</strong> <span t-if="o.contact_address2"><span t-field="o.contact_address2"/></span>   
+    </div>
+
+   <div class="row" style="margin-left:0px; ">
+    	<div class="col-xs-50 col-xs-offset-1" style="font-size:20px">
+    		***********Frees Items Under Plan******************
+       </div>
+ </div>
+
+   <div class="row" style="margin-left:0px; ">
+    	<div class="col-xs-50 col-xs-offset-1" style="font-size:20px">
+    		Coffee Machine
+       </div>
+ </div>
+
+   <div class="row" style="margin-left:0px; ">
+    	<div class="col-xs-50 col-xs-offset-1" style="font-size:20px">
+    	      Coffee Grinder
+       </div>
+ </div>
+
+   <div class="row" style="margin-left:0px; ">
+    	<div class="col-xs-50 col-xs-offset-1" style="font-size:20px">
+    		Accessories
+       </div>
+ </div>
+
+   <div class="row" style="margin-left:0px; ">
+    	<div class="col-xs-50 col-xs-offset-1" style="font-size:20px">
+    		Capsules Machine
+       </div>
+ </div>
 
 
-                </div>
-            </div>     
-                    
+   <div class="row">
+    	<div class="col-xs-50 col-xs-offset-1" style="font-size:20px">
+    		<strong>Business Transaction Details</strong>
+       </div>
+ </div>
+
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Delivery Details</th>
+                        <th>Delivery Date</th>
+                        <th class="text-right">Invoice Date</th>
+                        <th class="text-right">Amount </th>
+                        <th >Payment Date</th>
+                    </tr>
+               </thead>
+               <tbody class="sale_tbody">
+                    <tr t-foreach="o.invoice_ids" t-as="l">
+                        <td>
+                           <span t-field="l.number"/>
+                        </td>
+                        <td>
+                            <span t-field="l.date_invoice"/>
+                        </td>
+                        <td>
+                            <span t-field="l.date_invoice"/>
+                        </td>
+                        <td>
+                            <span t-field="l.amount_total"/>
+                        </td>
+                        <td>
+                            <span t-field="l.date_due"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+   <div class="row">
+    	<div class="col-xs-50 col-xs-offset-1" style="font-size:20px">
+    		<strong>AMC yes/No</strong>
+       </div>
+
+    </div>
+
+   <div class="row">
+    	<div class="col-xs-50 col-xs-offset-1" style="font-size:20px">
+    		if AMC included then Enter the amount , It should affect AMC earning account 
+               A place/option to enter visiting dates <br/>
+               if AMC not included while attempting for AMC service invoice should be raised<br/>
+       </div>
+     </div>
+   <div class="row">
+    	<div class="col-xs-50 col-xs-offset-1" style="font-size:20px">
+    		<strong>Security Amount Details</strong>  <br/>
+              <strong>Total Security Deposit Amount </strong>
+       </div>
+
+    </div>
+
+
+   <div class="row" style="margin-left:0px; ">
+    	<div class="col-xs-5 col-xs-offset-1" style="font-size:20px">
+    		<strong>Buyer</strong> 
+       </div>
+    	<div class="col-xs-5 col-xs-offset-1" style="font-size:20px">
+    		<strong>Seller</strong>  
+       </div>
+
+    </div>
 
 
 
-
-
-           <div class="row"  style="font-size:20px " >
-                  <div class="col-xs-5 col-xs-offset-1"  >
-                <h2> <strong  >Contact details Outside UAE</strong> </h2>
-                 </div>
             </div>
 
-   <div class="row">
-    	<div class="col-xs-5 col-xs-offset-1"  style="font-size:20px">
-    		  <strong>Name</strong> <span t-if="o.int_reference1"><span t-field="o.int_reference1"/></span>
-       </div>
-       <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px" >
-    		  <strong>Name</strong> <span t-if="o.int_reference1"><span t-field="o.int_reference1"/></span>     
-        </div>
-
-    </div>
+         
 
 
 
-   <div class="row">
-    	<div class="col-xs-5 col-xs-offset-1"  style="font-size:20px">
-    		  <strong>Phone Number</strong> <span t-if="o.ph_no_int2"><span t-field="o.ph_no_int2"/></span>   
-       </div>
-        <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px" >
-    		 <strong>Phone Number</strong> <span t-if="o.ph_no_int2"><span t-field="o.ph_no_int2"/></span>      
-        </div>
 
-    </div>
-
-
-
-   <div class="row">
-    	<div class="col-xs-5 col-xs-offset-1"  style="font-size:20px" >
-    		<strong>Address</strong> <span t-if="o.contact_address_international1"><span t-field="o.contact_address2"/></span>    
-        </div>
-        <div class="col-xs-5 col-xs-offset-1"  style="font-size:20px" >  
-    		<strong>Address</strong> <span t-if="o.contact_address_international2"><span t-field="o.contact_address_international1"/></span>        
-        </div>
-
-    </div>
 
 
 
         </div>
     </t>
 </t>  
+</t>
 </t>
 </template>
 

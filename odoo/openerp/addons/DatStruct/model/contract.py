@@ -84,6 +84,7 @@ class contract_loan(models.Model):
     contact_address_international2      = fields.Text('Contact Address') 
     date                  = fields.Date(string='Date')
     emirates_id           = fields.Char('Eerides ID')
+    invoice_ids           = fields.One2many('account.invoice','contract_id','Invoices') 
     
     
     @api.onchange('plan_id')
