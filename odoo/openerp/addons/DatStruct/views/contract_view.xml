@@ -11,6 +11,7 @@
                   <header>
                     <button name='view_invoice' string='View Invoice' type='object' attrs="{'invisible':[('invoiced', '=', False)]}"/>
                     <button name='action_run' string='Run' states='draft' type='object'/>
+                    <button name='action_done' string='Complete' states='running' type='object'/>
                     <field name='state' widget='statusbar' readonly='1'/>
                      
                    </header>                  
@@ -23,17 +24,17 @@
                         </div>
                        <group>
                             <group>
-                                <field name='invoiced' invisible='1'/>                                
-                                <field name= 'partner_id'/>
-                                <label for = 'emirates_id' string= "Emerites_id"/>
-                                <field name= 'emirates_id' nolabel="1"/>
+                                <field name='invoiced' invisible='1'/>     
+                                <field name='type' invisible='1'/>                           
+                                <field name= 'partner_id'/>                              
+                                <field name= 'emirates_id'/>
                                 <field name= 'company_name'/>
                                 <field name= 'address'/>
                                 <field name= 'address1'/>
                                 <field name='city'/>
                                 <field name='state_id'/>
                                 <field name='country_id'/>
-                                <field name= 'plan_id'/>
+                                <field name= 'plan_id' domain="[('type', '=', type)]"/>
                             </group>
                              <group> 
                                 <field name= 'type' invisible='1'/> 
@@ -63,6 +64,7 @@
                      <notebook>
                         <page string='Products'>
                             <seperator string ='Free Products'/>
+                            <label for='free_items'/>
                              <field name='free_items' context="{'default_type':'free'}" domain="[('plan_id', '=', plan_id), ('type', '=', 'free')]">
                                 <tree editable='bottom'>
                                     <field name='product_id'/>
@@ -177,7 +179,7 @@
                     <field name="name"/>
                     <field name= 'amount'/>
                     <field name= 'duration'/>
-                    <field name= 'type' invisible='1'/>
+                    <field name= 'type' invisible='0'/>
                   </group>
                 
                   <field name= 'free_items' context="{'default_type':'free'}">
