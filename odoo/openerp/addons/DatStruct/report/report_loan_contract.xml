@@ -1,240 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-<data> 
-    
-<template id="report_contract_document">
-<t t-name="DatStruct.report_contract_document">
-<t t-name="DatStruct.report_contract_document">
-    <t t-name="DatStruct.report_contract_document">
-    <t t-call="report.external_layout">
-        <div class="page">
-            <br/>
-           <br/>
-            <br/>
-           <br/>
-           <div class="row" >
-                <div  style="font-size:20px" class="col-xs-5 col-xs-offset-1" >
-                         <strong>Date:</strong> <span t-if="o.date"><span t-field="o.date"/></span>   
-               </div>
-          </div>
-           <div class="row"  style="margin-left:0px;">
-                <div class="col-xs-50 col-xs-offset-1" style="font-size:20px">
-                         <strong>Name of the Organisation/Customer:</strong> <span t-if="o.partner_id"><span t-field="o.partner_id.name"/></span>   
-               </div>
+  <data>     
+    <template id="report_contract_document">      
+      <t t-call="report.external_layout">
+              <div class="page">
+                  <div class="row text-center">
+                    <h1>KIMBO Sales Contract</h1>
+                  </div>
+                  <br/>
+                  <br/>        
+                  <div class="row" style="margin-left:0px;">
+                    <div  style="font-size:15px">
+                        Date:<span t-if="o.date"><span t-field="o.date"/></span>   
+                    </div>
+                  </div>
+                  <br/>
+                  <br/>
+                  <div class="row"  style="margin-left:0px;">
+                    <div style="font-size:15px">
+                      Name of the Organisation/Person: <span t-if="o.partner_id"><span t-field="o.partner_id.name"/></span>   
+                    </div>
+                  </div>
+                  <strong>Personal Details</strong>
+                  <div class="row" style="margin-left:0px;">
+                    <div  style="font-size:15px">
+                      Nationality:<span t-if="o.country_id"><span t-field="o.country_id.name"/></span>   
+                    </div>
+                  </div>
+                  <div class="row" style="margin-left:0px;">
+                    <div  style="font-size:15px">
+                       Passport Number: <span t-if="o.passport_no"><span t-field="o.passport_no"/></span>   
+                     </div>
+                  </div>
+                  <div class="row"    style="margin-left:0px;">
+                    <div  style="font-size:15px">
+                      Mobile: <span t-if="o.mobile"><span t-field="o.mobile"/></span>   
+                    </div>
+                  </div>
+                  <div class="row"  style="margin-left:0px;">
+                    <div  style="font-size:15px">
+                      Address: <span t-if="o.partner_id">
+                      <span t-field="o.address"/>
+                      <span t-field="o.address1"/>
+                      <span t-field="o.city"/>          
+                      </span>    
+                    </div>
+                  </div>
+                  <div class="row" style="margin-left:0px;">
+                    <div  style="font-size:15px">
+                      Email : <span t-if="o.email"><span t-field="o.email"/></span>   
+                    </div>
+                  </div>
+                  <div class="row"  style="margin-left:0px;">
+                    <div  style="font-size:15px">
+                      Emirates ID:<span t-if="o.emirates_id"><span t-field="o.emirates_id"/></span>   
+                   </div>
+                  </div>          
+                  <div class="row" style="margin-left:0px; ">
+                    <div   style="font-size:15px" >
+                      <strong>Contact details Home Country</strong> 
+                    </div>
+                  </div>
+                  <div class="row" style="margin-left:0px;">
+                    <div  style="font-size:15px">
+                      Name : <span t-if="o.int_reference1"><span t-field="o.int_reference1"/></span>   
+                   </div>
+                 </div>     
 
-            </div>
-
-           <div class="row" style="margin-left:0px;">
-                <div class="col-xs-25 col-xs-offset-1" style="font-size:20px">
-                         <strong>Nationality:</strong> <span t-if="o.country_id"><span t-field="o.country_id.name"/></span>   
-               </div>
-
-            </div>
-        <div class="row" style="margin-left:0px;">
-                <div class="col-xs-25 col-xs-offset-1" style="font-size:20px">
-                         <strong>Passport Number:</strong> <span t-if="o.passport_no"><span t-field="o.passport_no"/></span>   
-               </div>
-          </div>
-           <div class="row"    style="margin-left:0px;">
-                <div class="col-xs-30 col-xs-offset-1" style="font-size:20px">
-                         <strong>Mobile:</strong> <span t-if="o.mobile"><span t-field="o.mobile"/></span>   
-               </div>
-          </div>
-
-           <div class="row"  style="margin-left:0px;">
-                <div class="col-xs-30 col-xs-offset-1" style="font-size:20px">
-                         <strong>Address:</strong> <span t-if="o.partner_id"><span t-field="o.address"/>
-                          <span t-field="o.address1"/>
-                         <span t-field="o.city"/>
-                               </span>   
-               </div>
-
-           <div class="row"  style="margin-left:0px;">
-                <div class="col-xs-30 col-xs-offset-1" style="font-size:20px">
-                         <strong>Emirates ID:</strong> <span t-if="o.emirates_id"><span t-field="o.emirates_id"/></span>   
-               </div>
-          </div>
-           <div class="row" style="margin-left:0px;">
-                <div class="col-xs-30 col-xs-offset-1" style="font-size:20px">
-                         <strong>Email :</strong> <span t-if="o.email"><span t-field="o.email"/></span>   
-               </div>
-          </div>
-
-           <div class="row" style="margin-left:0px; ">
-                  <div class="col-xs-30 col-xs-offset-1"  style="font-size:20px" >
-                <strong>Contact details Home Country</strong> 
+                  <div class="row" style="margin-left:0px;">
+                  	<div  style="font-size:15px">
+                		  Mobile: <span t-if="o.ph_no_int2"><span t-field="o.ph_no_int2"/></span>   
+                    </div>
+                  </div>
+                  <div class="row" style="margin-left:0px;" >
+                  	<div  style="font-size:15px">
+                		  Address: <span t-if="o.contact_address_international1"><span t-field="o.contact_address2"/></span>    
+                    </div>
+                  </div>
+                  <br/>
+                  <div class="row" style="margin-left:0px;">
+                    <div style="font-size:15px">
+                       <strong>Date of Contract Begin:</strong> <span t-if="o.date"><span t-field="o.date"/></span>   
+                   </div>
+                  </div>
+                   <div class="row" style="margin-left:0px;">
+                    <div  style="font-size:15px">
+                      <strong>Date of Contract Ends:</strong> <span t-if="o.date"><span t-field="o.date"/></span>   
+                   </div>
                  </div>
-            </div>
+                 <div class="row" style="margin-left:0px;">
+              	   <div class="col-xs-50 col-xs-offset-1" style="font-size:15px">
+              		    Select Items in the Contract    
+                   </div>
+                  </div>
+                  <div class="row" style="margin-left:0px; ">
+                    <div class="col-xs-50 col-xs-offset-1" style="font-size:15px">
+                      ***********Frees Items Under Plan******************
+                    </div>
+                </div>
+                <div class="row" style="margin-left:0px; ">
+                  	<div class="col-xs-50 col-xs-offset-1" style="font-size:15px">
+                  		Coffee Machine
+                     </div>
+                </div>
 
-        <div class="row">
-                <div class="col-xs-5 col-xs-offset-1" style="font-size:20px">
-                    <strong>Name :</strong> <span t-if="o.int_reference1"><span t-field="o.int_reference1"/></span>   
-               </div>
-             </div>     
+                 <div class="row" style="margin-left:0px; ">
+                  	<div class="col-xs-50 col-xs-offset-1" style="font-size:15px">
+                  	      Coffee Grinder
+                     </div>
+                </div>
 
-   <div class="row">
-    	<div class="col-xs-5 col-xs-offset-1" style="font-size:20px">
-    		  <strong>Phone Number :</strong> <span t-if="o.ph_no_int2"><span t-field="o.ph_no_int2"/></span>   
-       </div>
+                 <div class="row" style="margin-left:0px; ">
+                  	<div class="col-xs-50 col-xs-offset-1" style="font-size:15px">
+                  		Accessories
+                     </div>
+                </div>
 
-    </div>
-   <div class="row">
-    	<div class="col-xs-5 col-xs-offset-1" style="font-size:20px">
-    		<strong>Address :</strong> <span t-if="o.contact_address_international1"><span t-field="o.contact_address2"/></span>    
-        </div>
-   </div>
-
-
-           <div class="row">
-                <div class="col-xs-5 col-xs-offset-1" style="font-size:20px">
-                         <strong>Date Start:</strong> <span t-if="o.date"><span t-field="o.date"/></span>   
-               </div>
-          </div>
-           <div class="row">
-                <div class="col-xs-5 col-xs-offset-1" style="font-size:20px">
-                         <strong>Date End:</strong> <span t-if="o.date"><span t-field="o.date"/></span>   
-               </div>
-         </div>
-   <div class="row" style="margin-left:0px; ">
-    	<div class="col-xs-50 col-xs-offset-1" style="font-size:20px">
-    		  Select Items in the Contract    
-       </div>
-
-    </div>
-
-   <div class="row" style="margin-left:0px; ">
-    	<div class="col-xs-50 col-xs-offset-1" style="font-size:20px">
-    		***********Frees Items Under Plan******************
-       </div>
- </div>
-
-   <div class="row" style="margin-left:0px; ">
-    	<div class="col-xs-50 col-xs-offset-1" style="font-size:20px">
-    		Coffee Machine
-       </div>
- </div>
-
-   <div class="row" style="margin-left:0px; ">
-    	<div class="col-xs-50 col-xs-offset-1" style="font-size:20px">
-    	      Coffee Grinder
-       </div>
- </div>
-
-   <div class="row" style="margin-left:0px; ">
-    	<div class="col-xs-50 col-xs-offset-1" style="font-size:20px">
-    		Accessories
-       </div>
- </div>
-
-   <div class="row" style="margin-left:0px; ">
-    	<div class="col-xs-50 col-xs-offset-1" style="font-size:20px">
-    		Capsules Machine
-       </div>
- </div>
+                 <div class="row" style="margin-left:0px; ">
+                  	<div class="col-xs-50 col-xs-offset-1" style="font-size:15px">
+                  		Capsules Machine
+                     </div>
+                </div>
 
 
-   <div class="row">
-    	<div class="col-xs-50 col-xs-offset-1" style="font-size:20px">
-    		<strong>Business Transaction Details</strong>
-       </div>
- </div>
+                <div class="row">
+                	<div class="col-xs-50 col-xs-offset-1" style="font-size:15px">
+                		<strong>Business Transaction Details</strong>
+                   </div>
+                </div>
 
-            <table class="table table-condensed">
-                <thead>
+                <table class="table table-condensed">
+                  <thead>
                     <tr>
-                        <th>Delivery Details</th>
-                        <th>Delivery Date</th>
-                        <th class="text-right">Invoice Date</th>
-                        <th class="text-right">Amount </th>
-                        <th >Payment Date</th>
+                      <th>Delivery Details</th>
+                      <th>Delivery Date</th>
+                      <th class="text-right">Invoice Date</th>
+                      <th class="text-right">Amount </th>
+                      <th >Payment Date</th>
                     </tr>
-               </thead>
-               <tbody class="sale_tbody">
+                  </thead>
+                  <tbody class="sale_tbody">
                     <tr t-foreach="o.invoice_ids" t-as="l">
-                        <td>
-                           <span t-field="l.number"/>
-                        </td>
-                        <td>
-                            <span t-field="l.date_invoice"/>
-                        </td>
-                        <td>
-                            <span t-field="l.date_invoice"/>
-                        </td>
-                        <td>
-                            <span t-field="l.amount_total"/>
-                        </td>
-                        <td>
-                            <span t-field="l.date_due"/>
-                        </td>
+                      <td>
+                         <span t-field="l.number"/>
+                      </td>
+                      <td>
+                          <span t-field="l.date_invoice"/>
+                      </td>
+                      <td>
+                          <span t-field="l.date_invoice"/>
+                      </td>
+                      <td>
+                          <span t-field="l.amount_total"/>
+                      </td>
+                      <td>
+                          <span t-field="l.date_due"/>
+                      </td>
                     </tr>
-                </tbody>
-            </table>
+                  </tbody>
+                </table>
 
-   <div class="row">
-    	<div class="col-xs-50 col-xs-offset-1" style="font-size:20px">
-    		<strong>AMC yes/No</strong>
-       </div>
+                <div class="row">
+                  <div style="font-size:15px">
+            		    <strong>AMC yes/No</strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-50 col-xs-offset-1" style="font-size:15px">
+                		if AMC included then Enter the amount , It should affect AMC earning account 
+                           A place/option to enter visiting dates <br/>
+                           if AMC not included while attempting for AMC service invoice should be raised<br/>
+                  </div>
+                </div>
+                <!-- <div class="row">
+              	  <div class="col-xs-50 col-xs-offset-1" style="font-size:15px">
+                		<strong>Security Amount Details</strong>  <br/>
+                          <strong>Total Security Deposit Amount </strong>
+                   </div>
 
-    </div>
-
-   <div class="row">
-    	<div class="col-xs-50 col-xs-offset-1" style="font-size:20px">
-    		if AMC included then Enter the amount , It should affect AMC earning account 
-               A place/option to enter visiting dates <br/>
-               if AMC not included while attempting for AMC service invoice should be raised<br/>
-       </div>
-     </div>
-   <div class="row">
-    	<div class="col-xs-50 col-xs-offset-1" style="font-size:20px">
-    		<strong>Security Amount Details</strong>  <br/>
-              <strong>Total Security Deposit Amount </strong>
-       </div>
-
-    </div>
+                </div> -->
 
 
-   <div class="row" style="margin-left:0px; ">
-    	<div class="col-xs-5 col-xs-offset-1" style="font-size:20px">
-    		<strong>Buyer</strong> 
-       </div>
-    	<div class="col-xs-5 col-xs-offset-1" style="font-size:20px">
-    		<strong>Seller</strong>  
-       </div>
-
-    </div>
-
-
-
-            </div>
-
-         
-
-
-
-
+                <table class="table table-condensed">
+                  <thead>
+                    <tr>
+                      <th><strong>Buyer</strong></th>
+                      <th><strong>Seller</strong></th>              
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>               
+                      </td>
+                      <td>                  
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>    
+                </div>              
+      </t>
+    </template>
 
 
 
-        </div>
-    </t>
-</t>  
-</t>
-</t>
-</template>
-
-
-
-<template id="report_loan_contract1">
-    <t t-call="report.html_container">
-        <t t-foreach="doc_ids" t-as="doc_id">
-            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'DatStruct.report_contract_document')"/>
-        </t>
-    </t>
-</template>
+  <template id="report_loan_contract1">
+      <t t-call="report.html_container">
+          <t t-foreach="doc_ids" t-as="doc_id">
+              <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'DatStruct.report_contract_document')"/>
+          </t>
+      </t>
+  </template>
 
 
 
 
 
-    </data>
+  </data>
 </openerp>
