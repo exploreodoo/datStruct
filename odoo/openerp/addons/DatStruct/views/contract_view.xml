@@ -10,7 +10,8 @@
                 <form string="Contract">  
                   <header>
                     <button name='view_invoice' string='View Invoice' type='object' attrs="{'invisible':[('invoiced', '=', False)]}"/>
-                    <button name='action_run' string='Run' states='draft' type='object'/>
+                    <button name='action_print' string='Print' states='draft' type='object'/>
+                      <button name='action_run' string='Run' states='draft' type='object'/>
                     <button name='action_done' string='Complete' states='running' type='object'/>
                     <field name='state' widget='statusbar' readonly='1'/>
                      
@@ -38,7 +39,8 @@
                             </group>
                              <group> 
                                 <field name= 'type' invisible='1'/> 
-                                <field name='date'/> 
+                                <field name='date'/>
+                                <field name='date_end'/> 
                                 <field name= 'gender'/>      
                                 <field name= 'dob'/>                      
                                 <field name= 'mobile'/>
