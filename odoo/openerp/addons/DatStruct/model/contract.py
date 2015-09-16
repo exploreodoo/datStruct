@@ -22,6 +22,7 @@
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning, except_orm
 from dateutil import relativedelta, parser
+import datetime
 
 class contract_loan(models.Model):
 
@@ -82,9 +83,26 @@ class contract_loan(models.Model):
     contact_address2      = fields.Text('Contact Address') 
     contact_address_international1      = fields.Text('Contact Address') 
     contact_address_international2      = fields.Text('Contact Address') 
-    date                  = fields.Date(string='Date')
+    date                  = fields.Date(string='Start Date')
     invoice_ids           = fields.One2many('account.invoice','contract_id','Invoices') 
     emirates_id           = fields.Char('Emerites_id')
+    date_end              = fields.Date(string='End Date', compute='_end_date')
+    
+    
+    @api.depends('plan_id','date')
+    def _end_date(self):
+        if self.plan_id and self.date :
+            length = 0
+            if self.plan_id.duration == '6' :
+                length = 6
+            elif self.plan_id.duration == '12' :
+                length = 12
+            elif self.plan_id.duration == '24':
+                length = 24  
+            startdate =datetime.datetime.strptime(self.date, '%Y-%m-%d').date()    
+            end = startdate  +  relativedelta.relativedelta(months=length)
+            self.date_end = end
+    
     
     
     @api.onchange('plan_id')
@@ -96,8 +114,10 @@ class contract_loan(models.Model):
             self.paid_items=[paid_item.id for paid_item in self.plan_id.paid_items]
 
     
-    
-    
+    @api.multi
+    def action_print(self):
+        for contract in self:
+            return self.pool['report'].get_action(self._cr, self._uid, [self.id], 'DatStruct.report_loan_contract1', context=self._context)
     
     
     
