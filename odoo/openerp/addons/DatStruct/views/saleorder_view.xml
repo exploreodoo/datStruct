@@ -18,6 +18,12 @@
                  <field name="amount_untaxed" position="replace">                   
                      <field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}" invisible='1'  />
                  </field> 
+             <field name="currency_id" position='after'>
+                <field name= 'purchase_id'/>
+           </field>
+         <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="after">
+         <field name='landed_cost'/>
+         </xpath>
 
             </field>
             </record> 
