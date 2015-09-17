@@ -117,27 +117,27 @@
                 <tr>
                   <th>Delivery Details</th>
                   <th>Delivery Date</th>
-                  <th class="text-right">Invoice Date</th>
-                  <th class="text-right">Amount </th>
-                  <th >Payment Date</th>
+                  <th>Invoice Date</th>
+                  <th>Amount</th>
+                  <th>Payment Date</th>
                 </tr>
               </thead>
               <tbody class="sale_tbody">
-                <tr t-foreach="o.invoice_ids" t-as="l">
+                <tr t-foreach="o.get_delivery_details()" t-as="l">
                   <td>
-                     <span t-field="l.number"/>
+                     <span t-esc="l.get('name')"/>
                   </td>
                   <td>
-                      <span t-field="l.date_invoice"/>
+                      <span t-esc="l.get('date')"/>
                   </td>
                   <td>
-                      <span t-field="l.date_invoice"/>
+                      <span t-esc="l.get('date')"/>
                   </td>
                   <td>
-                      <span t-field="l.amount_total"/>
+                      <span t-esc="l.get('amount')"/>
                   </td>
                   <td>
-                      <span t-field="l.date_due"/>
+                      <span t-esc="l.get('date')"/>
                   </td>
                 </tr>
               </tbody>

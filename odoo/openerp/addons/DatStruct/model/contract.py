@@ -26,6 +26,8 @@ import datetime
 
 class contract_loan(models.Model):
 
+      
+
 
     @api.one    
     def _compute_invoice(self):    
@@ -72,7 +74,7 @@ class contract_loan(models.Model):
     invoice_rule = fields.Selection([
             ('1', 'Month(s)'),
             ('12', 'Year(s)'),
-            ], 'Recurrency', default='1', required='1', help="Invoice automatically repeat at specified interval")    
+            ], 'Recurrency', default='1', required=True, help="Invoice automatically repeat at specified interval")    
     manager_id = fields.Many2one('res.users', 'Manager', 
         default=lambda self: self.env.user, track_visibility='onchange')
     invoiced = fields.Boolean('Invoiced', compute='_compute_invoice')
@@ -237,6 +239,32 @@ class contract_loan(models.Model):
             'res_model': 'account.invoice',
             'nodestroy': True,
         }        
+
+    def _get_number_word(self, number):
+        if number == 1:
+            return "1st"
+        if number == 2:
+            return "2nd"
+        if number == 3:
+            return "3rd"        
+        return "%sth" % number
+
+    @api.multi
+    def get_delivery_details(self):        
+        res = []        
+        date = self.date        
+        if self.plan_id:
+            amount = 0.0
+            for paid in self.paid_items:
+                amount += paid.quantity * paid.product_id.list_price
+
+            for row in range(int(self.plan_id.duration)):
+                next_date = parser.parse(date) +  relativedelta.relativedelta(months=+row)
+                res.append({'name':'%s Delivery' % (self._get_number_word(row+1)),
+                    'date':next_date.strftime('%d-%m-%Y'),
+                    'amount':amount})    
+        return res
+
 
 contract_loan()
 
