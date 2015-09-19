@@ -143,8 +143,19 @@ class contract_loan(models.Model):
             self.passport_issue_date = self.partner_id and self.partner_id.passport_issue_date or False
             self.country_issue       = self.partner_id and self.partner_id.country_issue and self.partner_id.country_issue.id or False
             self.expiry_date         = self.partner_id and self.partner_id.expiry_date or False
-    
-    
+    @api.multi
+    def view_delivery(self):
+        ids = [row.id for row in self]    
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Contract Invocie',
+            'view_type': 'form',
+            'view_mode': 'tree,form',        
+            'domain' : [('contract_id','in',ids)],
+            'res_model': 'stock.picking',
+            'nodestroy': True,
+        }        
+
 
     @api.one
     def _prepare_invoice(self):                
@@ -204,7 +215,8 @@ class contract_loan(models.Model):
 
     @api.model
     def create_invoice(self):        
-        for row in self.search([('state', '=', 'running'), ('next_invoice_date', '<=', fields.Date.context_today(self))]):                                        
+        for row in self.search([('state', '=', 'running'), ('next_invoice_date', '<=', fields.Date.context_today(self))]):   
+            row.create_delivery_order()                               
             row._prepare_invoice()
             duration = int(row.invoice_rule)
             next_date = parser.parse(fields.Date.context_today(self)) +  relativedelta.relativedelta(months=+duration)            
@@ -222,6 +234,7 @@ class contract_loan(models.Model):
             row.next_invoice_date = fields.Date.context_today(self)
             row.state='running'
             # row.create_invoice()
+            row.create_delivery_order()  
             row._prepare_invoice()
             duration = int(row.invoice_rule)
             next_date = parser.parse(fields.Date.context_today(self)) +  relativedelta.relativedelta(months=+duration)            
@@ -264,6 +277,53 @@ class contract_loan(models.Model):
                     'date':next_date.strftime('%d-%m-%Y'),
                     'amount':amount})    
         return res
+        self.env['ir.model.data'].xmlid_to_res_id('stock.picking_type_out')
+
+    @api.multi 
+    def create_delivery_order(self):
+        for contract in self :
+            try :
+                type = self.env['ir.model.data'].xmlid_to_res_id('stock.picking_type_out')
+            except:
+                type=False
+                pass      
+            picking_id = self.env['stock.picking'].create({
+                    'origin': contract.name,
+                    'company_id': self.company_id and self.company_id.id or False,
+                    'move_type': 'one',
+                    'partner_id': contract.partner_id and contract.partner_id.id or False,
+                    'picking_type_id':type,
+                    'contract_id': self.id 
+                    })
+            for item in self.paid_items :
+                
+                self.env['stock.move'].create({
+                'product_uos_qty': item.quantity ,
+                'date_expected': fields.Date.context_today(self), 
+                'date': fields.Date.context_today(self), 
+                'product_id': item.product_id and item.product_id.id ,
+                'product_uom':  item.product_uom and item.product_uom.id, 
+                'picking_type_id': picking_id and picking_id.picking_type_id.id , 
+                'product_uom_qty': item.quantity , 
+                'invoice_state': '2binvoiced',
+                'product_tmpl_id': False, 
+                'product_uos': False, 
+                'reserved_quant_ids': [],
+                'location_dest_id': picking_id.picking_type_id and picking_id.picking_type_id.default_location_dest_id.id , 
+                'procure_method': 'make_to_stock',
+                'product_packaging': False, 
+                'location_id': picking_id.picking_type_id and picking_id.picking_type_id.default_location_src_id.id ,
+                'picking_id': picking_id and picking_id.id  ,
+                'name': item.product_id and item.product_id.name 
+                })
+#                   
+
+
+
+
+
+
+
 
 
 contract_loan()
@@ -291,6 +351,7 @@ class plan_package(models.Model):
     name = fields.Char(string='Description',  required=True)
     plan_id = fields.Many2one('contract.plan', string='Plan', ondelete='cascade')
     product_id = fields.Many2one('product.product', 'Product', domain=[('sale_ok', '=', True)], required=True, change_default=True, ondelete='restrict')
+    product_uom = fields.Many2one('product.uom', 'Product UoM',required='1')
     quantity = fields.Float('Quantity')
     type = fields.Selection([('paid', 'Paid'), ('free', 'Free')], 'Type')
 plan_package()

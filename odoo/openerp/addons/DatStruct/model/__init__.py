@@ -5,3 +5,4 @@ import procurement_order
 import contract
 import partner
 import account
+#import stock

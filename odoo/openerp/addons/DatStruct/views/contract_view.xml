@@ -9,7 +9,8 @@
             <field name="arch" type="xml">   
                 <form string="Contract">  
                   <header>
-                    <button name='view_invoice' string='View Invoice' type='object' attrs="{'invisible':[('invoiced', '=', False)]}"/>
+<!--                    <button name='view_invoice' string='View Invoice' type='object' attrs="{'invisible':[('invoiced', '=', False)]}"/>-->
+                     <button name='view_delivery' string='View Delivery Order' type='object' attrs="{'invisible':[('invoiced', '=', False)]}"/>
                     <button name='action_print' string='Print' states='draft' type='object'/>
                       <button name='action_run' string='Run' states='draft' type='object'/>
                     <button name='action_done' string='Complete' states='running' type='object'/>
@@ -195,9 +196,11 @@
                   <field name= 'paid_items' context="{'default_type':'paid'}">
                       <tree editable='bottom'>
                           <field name='product_id'/>
-                          <field name='name'/>
+                           <field name='product_id'/>
+                           <field name='product_uom'/>
                           <field name='quantity'/>
                           <field name='type'/>
+                          
                       </tree>
                   </field> 
               </sheet>
