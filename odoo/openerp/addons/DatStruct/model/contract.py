@@ -234,7 +234,7 @@ class contract_loan(models.Model):
             row.next_invoice_date = fields.Date.context_today(self)
             row.state='running'
             # row.create_invoice()
-            row.create_delivery_order()  
+            row.create_delivery_order(is_first=True)  
             row._prepare_invoice()
             duration = int(row.invoice_rule)
             next_date = parser.parse(fields.Date.context_today(self)) +  relativedelta.relativedelta(months=+duration)            
@@ -280,7 +280,7 @@ class contract_loan(models.Model):
         self.env['ir.model.data'].xmlid_to_res_id('stock.picking_type_out')
 
     @api.multi 
-    def create_delivery_order(self):
+    def create_delivery_order(self, is_first=False):
         for contract in self :
             try :
                 type = self.env['ir.model.data'].xmlid_to_res_id('stock.picking_type_out')
@@ -305,7 +305,7 @@ class contract_loan(models.Model):
                 'product_uom':  item.product_uom and item.product_uom.id, 
                 'picking_type_id': picking_id and picking_id.picking_type_id.id , 
                 'product_uom_qty': item.quantity , 
-                'invoice_state': '2binvoiced',
+                'invoice_state': 'invoiced',
                 'product_tmpl_id': False, 
                 'product_uos': False, 
                 'reserved_quant_ids': [],
@@ -316,6 +316,29 @@ class contract_loan(models.Model):
                 'picking_id': picking_id and picking_id.id  ,
                 'name': item.product_id and item.product_id.name 
                 })
+            if is_first:
+                for item in self.free_items :
+                    
+                    self.env['stock.move'].create({
+                    'product_uos_qty': item.quantity ,
+                    'date_expected': fields.Date.context_today(self), 
+                    'date': fields.Date.context_today(self), 
+                    'product_id': item.product_id and item.product_id.id ,
+                    'product_uom':  item.product_uom and item.product_uom.id, 
+                    'picking_type_id': picking_id and picking_id.picking_type_id.id , 
+                    'product_uom_qty': item.quantity , 
+                    'invoice_state': 'invoiced',
+                    'product_tmpl_id': False, 
+                    'product_uos': False, 
+                    'reserved_quant_ids': [],
+                    'location_dest_id': picking_id.picking_type_id and picking_id.picking_type_id.default_location_dest_id.id , 
+                    'procure_method': 'make_to_stock',
+                    'product_packaging': False, 
+                    'location_id': picking_id.picking_type_id and picking_id.picking_type_id.default_location_src_id.id ,
+                    'picking_id': picking_id and picking_id.id  ,
+                    'name': item.product_id and item.product_id.name 
+                    })
+        return True
 #                   
 
 
@@ -338,7 +361,7 @@ class contract_plan(models.Model):
     service_charge = fields.Char(string='Service Charge')
     duration = fields.Selection([('6', '6 Months'),('12', '12 Months'), ('24', '24 Months')], string='Period',  required=True)
     free_items = fields.One2many('plan.package', 'plan_id', 'Free Items', help='Package includes free items', domain=[('type', '=', 'free')])
-    paid_items = fields.One2many('plan.package', 'plan_id', 'Free Items', help='Package includes free items', domain=[('type', '=', 'paid')])
+    paid_items = fields.One2many('plan.package', 'plan_id', 'Paid Items', help='Package includes free items', domain=[('type', '=', 'paid')])
     type = fields.Selection([('loan', 'Loan'), ('contract', 'Contract')], 'Type', default='contract', required=True)
 
 contract_plan()

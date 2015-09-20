@@ -184,21 +184,23 @@
                     <field name= 'duration'/>
                     <field name= 'type' invisible='0'/>
                   </group>
-                
+                  <label for='free_items'/>
                   <field name= 'free_items' context="{'default_type':'free'}">
                       <tree editable='bottom'>
                           <field name='product_id'/>
                           <field name='name'/>
                           <field name='quantity'/>
+                          <field name='product_uom'/>
                           <field name='type'/>
                       </tree>
                   </field> 
+                  <label for='paid_items'/>
                   <field name= 'paid_items' context="{'default_type':'paid'}">
                       <tree editable='bottom'>
                           <field name='product_id'/>
-                           <field name='product_id'/>
-                           <field name='product_uom'/>
+                          <field name='name'/>                           
                           <field name='quantity'/>
+                          <field name='product_uom'/>
                           <field name='type'/>
                           
                       </tree>
