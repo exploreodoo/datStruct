@@ -148,7 +148,7 @@ class contract_loan(models.Model):
         ids = [row.id for row in self]    
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Contract Invocie',
+            'name': 'Contract Delivery Order',
             'view_type': 'form',
             'view_mode': 'tree,form',        
             'domain' : [('contract_id','in',ids)],
